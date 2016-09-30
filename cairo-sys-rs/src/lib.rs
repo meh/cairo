@@ -558,7 +558,7 @@ extern "C" {
     pub fn cairo_xcb_surface_create_with_xrender_format(connection: *mut xcb::ffi::xcb_connection_t,
                                                         screen: *const xcb::ffi::xcb_screen_t,
                                                         drawable: xcb::ffi::xcb_drawable_t,
-                                                        format: *const xcb::ffi::xcb_render_pictforminfo_t,
+                                                        format: *const xcb::ffi::render::xcb_render_pictforminfo_t,
                                                         width: c_int,
                                                         height: c_int) -> *mut cairo_surface_t;
     #[cfg(feature = "xcb")]
