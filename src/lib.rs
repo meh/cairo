@@ -2,12 +2,12 @@
 // See the COPYRIGHT file at the top-level directory of this distribution.
 // Licensed under the MIT license, see the LICENSE file or <http://opensource.org/licenses/MIT>
 
-extern crate cairo_sys as ffi;
+pub extern crate cairo_sys as sys;
 extern crate libc;
 extern crate glib;
 extern crate c_vec;
 
-pub use ffi;
+pub use sys as ffi;
 pub use ffi::enums;
 pub use ffi::cairo_rectangle_t as Rectangle;
 
