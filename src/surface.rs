@@ -6,6 +6,7 @@ use std::mem;
 use libc::c_void;
 
 use glib::translate::*;
+use Device;
 use ffi;
 use ffi::enums::{
     Status,
@@ -13,11 +14,15 @@ use ffi::enums::{
 };
 
 #[derive(Debug)]
-pub struct Surface(*mut ffi::cairo_surface_t);
+pub struct Surface(pub *mut ffi::cairo_surface_t);
 
 impl Surface {
     pub fn status(&self) -> Status {
         unsafe { ffi::cairo_surface_status(self.to_glib_none().0) }
+    }
+
+    pub fn device(&self) -> Device {
+      unsafe { Device::from_glib_none(ffi::cairo_surface_get_device(self.to_glib_none().0)) }
     }
 }
 

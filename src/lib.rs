@@ -2,12 +2,11 @@
 // See the COPYRIGHT file at the top-level directory of this distribution.
 // Licensed under the MIT license, see the LICENSE file or <http://opensource.org/licenses/MIT>
 
-pub extern crate cairo_sys as sys;
+pub extern crate cairo_sys as ffi;
 extern crate libc;
 extern crate glib;
 extern crate c_vec;
 
-pub use sys as ffi;
 pub use ffi::enums;
 pub use ffi::cairo_rectangle_t as Rectangle;
 
@@ -32,6 +31,7 @@ pub use enums::{
     PathDataType,
     Format,
     SurfaceType,
+    DeviceType,
 };
 
 pub use error::{
@@ -78,6 +78,7 @@ pub use matrices::{
 pub use rectangle::RectangleInt;
 
 pub use surface::Surface;
+pub use device::Device;
 
 pub use image_surface::{
     ImageSurface,
@@ -96,4 +97,8 @@ mod paths;
 mod patterns;
 mod rectangle;
 mod surface;
+mod device;
 mod matrices;
+
+#[cfg(feature = "xcb")]
+pub mod xcb;

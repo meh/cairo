@@ -7,10 +7,10 @@
 extern crate libc;
 
 #[cfg(feature = "xlib")]
-extern crate x11;
+pub extern crate x11;
 
 #[cfg(feature = "xcb")]
-extern crate xcb;
+pub extern crate xcb;
 
 use libc::{c_void, c_int, c_uint, c_char, c_uchar, c_double, c_ulong};
 

@@ -8,3 +8,4 @@ pub use patterns::{
     Pattern,
 };
 pub use surface::SurfaceExt;
+pub use device::DeviceExt;
