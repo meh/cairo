@@ -20,6 +20,7 @@ embed-lgpl-docs = ["gtk-rs-lgpl-docs"]
 png = ["cairo-sys-rs/png"]
 purge-lgpl-docs = ["gtk-rs-lgpl-docs"]
 v1_12 = ["cairo-sys-rs/v1_12"]
+xlib = ["cairo-sys-rs/xlib"]
 
 [build-dependencies.gtk-rs-lgpl-docs]
 git = "https://github.com/gtk-rs/lgpl-docs"

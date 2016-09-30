@@ -7,6 +7,7 @@ extern crate libc;
 extern crate glib;
 extern crate c_vec;
 
+pub use ffi;
 pub use ffi::enums;
 pub use ffi::cairo_rectangle_t as Rectangle;
 
