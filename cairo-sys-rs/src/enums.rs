@@ -288,6 +288,7 @@ pub enum SurfaceType {
     Subsurface,
     Cogl,
 }
+
 #[repr(C)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Format {
@@ -298,4 +299,18 @@ pub enum Format {
     A1 = 3,
     Rgb16_565 = 4,
     Rgb30 = 5,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum DeviceType {
+  Drm,
+  Gl,
+  Script,
+  Xcb,
+  Xlib,
+  Xml,
+  Cogl,
+  Win32,
+  Invalid,
 }

@@ -39,10 +39,13 @@ use enums::{
     Format,
     SurfaceType,
     Operator,
+    DeviceType,
 };
 
 #[repr(C)]
 pub struct cairo_t(c_void);
+#[repr(C)]
+pub struct cairo_device_t(c_void);
 #[repr(C)]
 pub struct cairo_surface_t(c_void);
 #[repr(C)]
@@ -234,6 +237,25 @@ extern "C" {
     //CAIRO UTILS: Error handling
     pub fn cairo_status_to_string (status : Status) -> *const c_char;
 
+    // CAIRO DEVICE
+    pub fn cairo_device_reference(device: *mut cairo_device_t) -> *mut cairo_device_t;
+    pub fn cairo_device_destroy(device: *mut cairo_device_t);
+    pub fn cairo_device_status(device: *mut cairo_device_t) -> Status;
+    pub fn cairo_device_finish(device: *mut cairo_device_t);
+    pub fn cairo_device_flush(device: *mut cairo_device_t);
+    pub fn cairo_device_get_type(device: *mut cairo_device_t) -> DeviceType;
+    pub fn cairo_device_get_reference_count(device: *mut cairo_device_t) -> c_uint;
+    //pub fn cairo_device_set_user_data(device: *mut cairo_device_t, key: *mut cairo_user_data_key_t, user_data: *mut c_void, destroy: cairo_destroy_func_t) -> Status;
+    //pub fn cairo_device_get_user_data(device: *mut cairo_device_t, key: *mut cairo_user_data_key_t) -> *mut c_void;
+    pub fn cairo_device_acquire(device: *mut cairo_device_t) -> Status;
+    pub fn cairo_device_release(device: *mut cairo_device_t);
+    pub fn cairo_device_observer_elapsed(device: *mut cairo_device_t) -> c_double;
+    pub fn cairo_device_observer_fill_elapsed(device: *mut cairo_device_t) -> c_double;
+    pub fn cairo_device_observer_glyphs_elapsed(device: *mut cairo_device_t) -> c_double;
+    pub fn cairo_device_observer_mask_elapsed(device: *mut cairo_device_t) -> c_double;
+    pub fn cairo_device_observer_paint_elapsed(device: *mut cairo_device_t) -> c_double;
+    pub fn cairo_device_observer_print(device: *mut cairo_device_t, write_func: cairo_write_func_t, closure: *mut c_void) -> Status;
+    pub fn cairo_device_observer_stroke_elapsed(device: *mut cairo_device_t) -> c_double;
 
     //CAIRO PATHS
     pub fn cairo_copy_path(cr: *mut cairo_t) -> *mut cairo_path_t;
@@ -458,6 +480,7 @@ extern "C" {
     pub fn cairo_surface_set_user_data(surface: *mut cairo_surface_t, key: *mut cairo_user_data_key_t, user_data: *mut c_void, destroy: cairo_destroy_func_t) -> Status;
     pub fn cairo_surface_get_reference_count(surface: *mut cairo_surface_t) -> c_uint;
     pub fn cairo_surface_mark_dirty(surface: *mut cairo_surface_t);
+    pub fn cairo_surface_get_device(surface: *mut cairo_surface_t) -> *mut cairo_device_t;
 
     // CAIRO IMAGE SURFACE
     pub fn cairo_image_surface_create(format: Format, width: c_int, height: c_int) -> *mut cairo_surface_t;
@@ -472,6 +495,7 @@ extern "C" {
     #[cfg(feature = "png")]
     pub fn cairo_surface_write_to_png_stream(surface: *mut cairo_surface_t, write_func: cairo_write_func_t, closure: *mut c_void) -> Status;
 
+    // CAIRO XLIB INTEGRATION
     #[cfg(feature = "xlib")]
     pub fn cairo_xlib_surface_create(dpy: *mut xlib::Display,
                                      drawable: xlib::Drawable,
@@ -517,6 +541,7 @@ extern "C" {
     pub fn cairo_xlib_surface_get_height(surface: *mut cairo_surface_t)
                                          -> c_int;
 
+    // CAIRO XCB INTEGRATION
     #[cfg(feature = "xcb")]
     pub fn cairo_xcb_surface_create(connection: *mut xcb::ffi::xcb_connection_t,
                                     drawable: xcb::ffi::xcb_drawable_t,
