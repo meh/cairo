@@ -9,6 +9,9 @@ extern crate libc;
 #[cfg(feature = "xlib")]
 extern crate x11;
 
+#[cfg(feature = "xcb")]
+extern crate xcb;
+
 use libc::{c_void, c_int, c_uint, c_char, c_uchar, c_double, c_ulong};
 
 #[cfg(feature = "xlib")]
@@ -514,4 +517,49 @@ extern "C" {
     pub fn cairo_xlib_surface_get_height(surface: *mut cairo_surface_t)
                                          -> c_int;
 
+    #[cfg(feature = "xcb")]
+    pub fn cairo_xcb_surface_create(connection: *mut xcb::ffi::xcb_connection_t,
+                                    drawable: xcb::ffi::xcb_drawable_t,
+                                    visual: *const xcb::ffi::xcb_visualtype_t,
+                                    width: c_int,
+                                    height: c_int) -> *mut cairo_surface_t;
+    #[cfg(feature = "xcb")]
+    pub fn cairo_xcb_surface_create_for_bitmap(connection: *mut xcb::ffi::xcb_connection_t,
+                                               screen: *const xcb::ffi::xcb_screen_t,
+                                               bitmap: xcb::ffi::xcb_pixmap_t,
+                                               width: c_int,
+                                               height: c_int) -> *mut cairo_surface_t;
+    #[cfg(feature = "xcb")]
+    pub fn cairo_xcb_surface_create_with_xrender_format(connection: *mut xcb::ffi::xcb_connection_t,
+                                                        screen: *const xcb::ffi::xcb_screen_t,
+                                                        drawable: xcb::ffi::xcb_drawable_t,
+                                                        format: *const xcb::ffi::xcb_render_pictforminfo_t,
+                                                        width: c_int,
+                                                        height: c_int) -> *mut cairo_surface_t;
+    #[cfg(feature = "xcb")]
+    pub fn cairo_xcb_surface_set_size(surface: *mut cairo_surface_t,
+                                      width: c_int,
+                                      height: c_int);
+    #[cfg(feature = "xcb")]
+    pub fn cairo_xcb_surface_set_drawable(surface: *mut cairo_surface_t,
+                                          drawable: xcb::ffi::xcb_drawable_t,
+                                          width: c_int,
+                                          height: c_int);
+    #[cfg(feature = "xcb")]
+    pub fn cairo_xcb_device_get_connection(device: *mut cairo_device_t)
+                                           -> *mut xcb::ffi::xcb_connection_t;
+    #[cfg(feature = "xcb")]
+    pub fn cairo_xcb_device_debug_cap_xrender_version(device: *mut cairo_device_t,
+                                                      major_version: c_int,
+                                                      minor_version: c_int);
+    #[cfg(feature = "xcb")]
+    pub fn cairo_xcb_device_debug_cap_xshm_version(device: *mut cairo_device_t,
+                                                   major_version: c_int,
+                                                   minor_version: c_int);
+    #[cfg(feature = "xcb")]
+    pub fn cairo_xcb_device_debug_get_precision(device: *mut cairo_device_t)
+                                                -> c_int;
+    #[cfg(feature = "xcb")]
+    pub fn cairo_xcb_device_debug_set_precision(device: *mut cairo_device_t,
+                                                precision: c_int);
 }
